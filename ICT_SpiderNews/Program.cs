@@ -242,8 +242,8 @@ namespace ICT_SpiderNews
             }
 
             string frendlyTitle = VietCMS.Framework.Core.Common.WebControl.ToFriendlyString(article.title);
-            if (_appDbContext.Articles.FirstOrDefault(x => x.SourceUrl.Equals(article.url) 
-                || x.FriendlyTitle.Equals(frendlyTitle)) == null)
+            if (_appDbContext.Articles.Count(x => x.SourceUrl.Equals(article.url) 
+                || x.FriendlyTitle.Equals(frendlyTitle)) == 0)
             {
                 string tmp = "";
                 if (string.IsNullOrEmpty(article.keyword))
@@ -266,7 +266,7 @@ namespace ICT_SpiderNews
                         tmp += ",";
                     }
                     
-                    if (_appDbContext.Keywords.FirstOrDefault(x => x.Title.Equals(si.Trim())) == null)
+                    if (_appDbContext.Keywords.Count(x => x.Title.Equals(si.Trim())) == 0)
                     {
                         keywords.Add(_appDbContext.Keywords.Add(new Keyword()
                         {

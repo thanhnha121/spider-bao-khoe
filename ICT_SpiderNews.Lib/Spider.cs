@@ -59,16 +59,11 @@ namespace SpiderNews.Lib
                             articleUrl = "http://" + myUri.Host + item.Url;
                         }
 
-                        _logging.Log("spider", "GET: " + articleUrl);
-                        if (_appDbContext.Articles.FirstOrDefault(x => x.SourceUrl.Equals(articleUrl)) == null)
+                        _logging.Log("spider", "GET: " + articleUrl, false);
+                        if (_appDbContext.Articles.Count(x => x.SourceUrl.Equals(articleUrl)) == 0)
                         {
+                            _logging.Log("spider", "GET: " + articleUrl);
                             var article = GetRemoteArticleInfo(articleUrl);
-
-                            //check by title
-                            //if (sqlhelperBackend.CheckArticleExistByTitle(article.title))
-                            //{
-                            //    continue;
-                            //}
 
                             if (article != null)
                             {

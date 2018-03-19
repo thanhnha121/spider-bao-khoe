@@ -13,16 +13,26 @@ namespace SpiderNews.Lib
             _appDbContext = appDbContext;
         }
 
-        public void Log(string type, string content)
+        public void Log(string type, string content, Boolean save = true)
         {
             Console.WriteLine(content);
-            _appDbContext.Logs.Add(new Log()
+            if (save)
             {
-                Type = type,
-                Content = content,
-                CreatedAt = DateTime.Now
-            });
-            _appDbContext.SaveChanges();
+                _appDbContext.Logs.Add(new Log()
+                {
+                    Type = type,
+                    Content = content,
+                    CreatedAt = DateTime.Now
+                });
+                try
+                {
+                    _appDbContext.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("WRITE LOG ERROR: ", e);
+                }
+            }
         }
     }
 }
